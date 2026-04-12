@@ -8,7 +8,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a1a;font-size:14px}
 .topbar{background:#fff;border-bottom:1px solid #e0e0e0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.topbar-title{font-size:15px;font-weight:600;color:#1a1a1a}
+.topbar-title{font-size:15px;font-weight:600}
 .sync-status{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
 .sync-ok{background:#EAF3DE;color:#27500A}
 .sync-warn{background:#FAEEDA;color:#633806}
@@ -18,7 +18,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tab{padding:10px 14px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:#888;border-bottom:2px solid transparent;white-space:nowrap}
 .tab.active{color:#185FA5;border-bottom-color:#185FA5}
 .tab:hover:not(.active){color:#333;background:#f9f9f9}
-.panel{display:none;padding:12px 14px;max-width:1100px;margin:0 auto}
+.panel{display:none;padding:12px 14px;max-width:1200px;margin:0 auto}
 .panel.active{display:block}
 .card{background:#fff;border:1px solid #e8e8e8;border-radius:10px;padding:12px 14px;margin-bottom:10px}
 .badge{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600;white-space:nowrap;display:inline-block}
@@ -31,9 +31,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .prog-bar{height:4px;border-radius:2px;background:#f0f0f0;margin-top:5px;overflow:hidden}
 .prog-fill{height:100%;border-radius:2px;transition:width .3s}
 .proj-header-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px}
-.task-wrap{overflow-x:auto}
-table.tasks{width:100%;border-collapse:collapse;min-width:580px}
-table.tasks th{font-size:10px;color:#888;font-weight:600;padding:4px 6px;text-align:left;border-bottom:1px solid #eee;text-transform:uppercase;letter-spacing:.03em}
+.task-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.tasks{width:100%;border-collapse:collapse;min-width:820px}
+table.tasks th{font-size:10px;color:#888;font-weight:600;padding:4px 6px;text-align:left;border-bottom:1px solid #eee;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
 table.tasks td{padding:5px 6px;border-bottom:1px solid #f5f5f5;vertical-align:middle}
 table.tasks tr:last-child td{border-bottom:none}
 table.tasks tr:hover td{background:#fafafa}
@@ -41,6 +41,8 @@ input[type=text],input[type=number]{font-size:12px;width:100%;border:1px solid #
 input[type=text]:focus,input[type=number]:focus{outline:none;border-color:#185FA5;box-shadow:0 0 0 2px rgba(24,95,165,.1)}
 select{font-size:11px;border:1px solid #e0e0e0;border-radius:6px;padding:4px 5px;background:#fff;color:#1a1a1a;cursor:pointer;font-family:inherit}
 select:focus{outline:none;border-color:#185FA5}
+textarea.detail-input{font-size:11px;width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:4px 6px;background:#fff;color:#1a1a1a;resize:none;font-family:inherit;min-height:38px;line-height:1.5}
+textarea.detail-input:focus{outline:none;border-color:#185FA5}
 input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:#185FA5}
 .btn{font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid #d0d0d0;background:#fff;cursor:pointer;color:#1a1a1a;font-family:inherit;font-weight:500}
 .btn:hover{background:#f5f5f5}
@@ -48,14 +50,18 @@ input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:#185FA5}
 .btn-primary{background:#185FA5;color:#fff;border-color:#185FA5}
 .btn-primary:hover{background:#0C447C}
 .btn-danger{color:#A32D2D;border-color:transparent;padding:4px 8px}
-.btn-danger:hover{background:#FCEBEB;border-color:#F09595}
-.btn-mic{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}
-.btn-mic.recording{background:#FCEBEB;color:#A32D2D;border-color:#F09595;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
-.add-row{display:grid;grid-template-columns:18px minmax(0,1fr) 58px 50px 88px 76px 72px auto;gap:5px;align-items:center;padding:7px 0 2px;border-top:1px dashed #e8e8e8;margin-top:4px}
-@media(max-width:700px){.add-row{grid-template-columns:18px 1fr;row-gap:5px}}
-.voice-area{display:flex;align-items:center;gap:8px;flex:1}
-.transcript{font-size:11px;color:#888;font-style:italic;min-height:16px;flex:1}
+.btn-danger:hover{background:#FCEBEB}
+.btn-mic{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;display:flex;align-items:center;gap:5px}
+.btn-mic.recording{background:#FCEBEB;color:#A32D2D;border-color:#F09595}
+.btn-mic.recording .mic-dot{background:#A32D2D;animation:pulse 1s infinite}
+.mic-dot{width:8px;height:8px;border-radius:50%;background:#3C3489;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.add-section{padding:8px 0 2px;border-top:1px dashed #e8e8e8;margin-top:6px}
+.add-row1{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:8px;margin-bottom:6px}
+.add-row2{display:grid;grid-template-columns:70px 60px 60px 110px 90px auto;gap:6px;align-items:center}
+@media(max-width:700px){.add-row2{grid-template-columns:repeat(3,1fr);row-gap:6px}}
+.voice-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:7px 10px;background:#f5f4ff;border-radius:7px;border:1px solid #dddaf5}
+.transcript{font-size:11px;color:#666;font-style:italic;flex:1;min-height:16px}
 .section-title{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:8px;margin-top:14px}
 .section-title:first-child{margin-top:0}
 textarea{font-size:12px;width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:7px 9px;background:#fff;color:#1a1a1a;resize:vertical;font-family:inherit;line-height:1.6}
@@ -69,22 +75,21 @@ textarea:focus{outline:none;border-color:#185FA5}
 .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:3px}
 .ph-grid{display:grid;grid-template-columns:minmax(0,1.5fr) 36px 90px 90px 70px 70px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:12px}
 .ph-grid:last-child{border-bottom:none}
-.ph-hdr{display:grid;grid-template-columns:minmax(0,1.5fr) 36px 90px 90px 70px 70px;gap:6px;padding:3px 0 7px;font-size:10px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.03em;border-bottom:1px solid #e0e0e0}
+.ph-hdr{display:grid;grid-template-columns:minmax(0,1.5fr) 36px 90px 90px 70px 70px;gap:6px;padding:3px 0 7px;font-size:10px;color:#888;font-weight:600;text-transform:uppercase;border-bottom:1px solid #e0e0e0}
 .rank-btn{font-size:12px;cursor:pointer;background:none;border:none;color:#aaa;padding:0 2px;line-height:1}
 .rank-btn:hover{color:#333}
 .ms-grid{display:grid;grid-template-columns:minmax(0,1fr) 72px 88px 22px;gap:6px;align-items:center;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:12px}
 .ms-grid:last-child{border-bottom:none}
-.ritual-block{border-left:3px solid #185FA5;padding-left:11px;margin-bottom:10px;border-radius:0}
+.ritual-block{border-left:3px solid #185FA5;padding-left:11px;margin-bottom:10px}
 .ritual-block ul{font-size:12px;color:#555;margin-top:3px;padding-left:15px;line-height:1.9}
 .rule-item{font-size:12px;color:#555;padding:5px 0;border-bottom:1px solid #f5f5f5;line-height:1.6}
 .rule-item:last-child{border-bottom:none}
 .toast{position:fixed;bottom:24px;right:20px;background:#1a1a1a;color:#fff;font-size:12px;padding:8px 16px;border-radius:8px;z-index:999;opacity:0;transition:opacity .25s;pointer-events:none}
 .toast.show{opacity:1}
-.loading-overlay{display:flex;align-items:center;justify-content:center;padding:40px;color:#888;font-size:13px;gap:10px}
-.spinner{width:18px;height:18px;border:2px solid #e0e0e0;border-top-color:#185FA5;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
-@keyframes spin{to{transform:rotate(360deg)}}
 .info-banner{background:#E6F1FB;border-radius:7px;padding:7px 12px;font-size:12px;color:#0C447C;margin-bottom:10px}
-.warn-banner{background:#FAEEDA;border-radius:7px;padding:7px 12px;font-size:12px;color:#633806;margin-bottom:10px}
+.report-btn-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.detail-preview{font-size:10px;color:#888;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.detail-preview:hover{color:#185FA5}
 </style>
 </head>
 <body>
@@ -92,8 +97,9 @@ textarea:focus{outline:none;border-color:#185FA5}
 <div class="topbar">
   <div class="topbar-title">Vinod · Project Tracker</div>
   <div style="display:flex;align-items:center;gap:8px">
-    <span id="sync-badge" class="sync-status sync-ing">Syncing...</span>
-    <button class="btn" onclick="syncAll()" style="font-size:11px;padding:4px 10px">Sync</button>
+    <span id="sync-badge" class="sync-status sync-warn">Local</span>
+    <button class="btn" onclick="pushToSheets()" style="font-size:11px;padding:4px 10px">Push to Sheets</button>
+    <button class="btn" onclick="pullFromSheets()" style="font-size:11px;padding:4px 10px">Pull from Sheets</button>
   </div>
 </div>
 
@@ -102,31 +108,33 @@ textarea:focus{outline:none;border-color:#185FA5}
   <button class="tab" onclick="showTab('weekly')">Weekly</button>
   <button class="tab" onclick="showTab('health')">Health</button>
   <button class="tab" onclick="showTab('ritual')">Ritual</button>
+  <button class="tab" onclick="showTab('reports')">Reports</button>
 </div>
 
-<div id="daily"  class="panel active"></div>
-<div id="weekly" class="panel"></div>
-<div id="health" class="panel"></div>
-<div id="ritual" class="panel"></div>
+<div id="daily"   class="panel active"></div>
+<div id="weekly"  class="panel"></div>
+<div id="health"  class="panel"></div>
+<div id="ritual"  class="panel"></div>
+<div id="reports" class="panel"></div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxlJyCPzh9hEmdQ-eA05VZ1t0TAi3MmoftiYQhujCMMpb1I57OGw77Pk5hcq3YXJ4QdMA/exec';
+const SHEETS_URL='https://script.google.com/macros/s/AKfycbxlJyCPzh9hEmdQ-eA05VZ1t0TAi3MmoftiYQhujCMMpb1I57OGw77Pk5hcq3YXJ4QdMA/exec';
 
-const PROJECTS = [
-  {id:'harv',    name:'HarV',     color:'#185FA5', bg:'#E6F1FB', tc:'#0C447C', dot:'#378ADD', defHrs:12},
-  {id:'cefg',    name:'CeFG',     color:'#3B6D11', bg:'#EAF3DE', tc:'#27500A', dot:'#639922', defHrs:10},
-  {id:'induh',   name:'IndUH',    color:'#712B13', bg:'#FAECE7', tc:'#712B13', dot:'#D85A30', defHrs:10},
-  {id:'chips',   name:'ChiPS',    color:'#534AB7', bg:'#EEEDFE', tc:'#3C3489', dot:'#7F77DD', defHrs:15},
-  {id:'yugma',   name:'Yugma',    color:'#854F0B', bg:'#FAEEDA', tc:'#633806', dot:'#EF9F27', defHrs:8},
-  {id:'learning',name:'Learning', color:'#0F6E56', bg:'#E1F5EE', tc:'#085041', dot:'#1D9E75', defHrs:5},
-  {id:'personal',name:'Personal', color:'#72243E', bg:'#FBEAF0', tc:'#72243E', dot:'#D4537E', defHrs:4}
+const PROJECTS=[
+  {id:'harv',    name:'HarV',     color:'#185FA5',bg:'#E6F1FB',tc:'#0C447C',dot:'#378ADD',defHrs:12},
+  {id:'cefg',    name:'CeFG',     color:'#3B6D11',bg:'#EAF3DE',tc:'#27500A',dot:'#639922',defHrs:10},
+  {id:'induh',   name:'IndUH',    color:'#712B13',bg:'#FAECE7',tc:'#712B13',dot:'#D85A30',defHrs:10},
+  {id:'chips',   name:'ChiPS',    color:'#534AB7',bg:'#EEEDFE',tc:'#3C3489',dot:'#7F77DD',defHrs:15},
+  {id:'yugma',   name:'Yugma',    color:'#854F0B',bg:'#FAEEDA',tc:'#633806',dot:'#EF9F27',defHrs:8},
+  {id:'learning',name:'Learning', color:'#0F6E56',bg:'#E1F5EE',tc:'#085041',dot:'#1D9E75',defHrs:5},
+  {id:'personal',name:'Personal', color:'#72243E',bg:'#FBEAF0',tc:'#72243E',dot:'#D4537E',defHrs:4}
 ];
 
-const STATUS_OPTS = ['','In progress','Blocked','Done','Deferred','Waiting','Review'];
-const PRI_OPTS    = ['P1','P2','P3'];
-const TAGS = {
+const STATUS_OPTS=['','In progress','Blocked','Done','Deferred','Waiting','Review'];
+const PRI_OPTS=['P1','P2','P3'];
+const TAGS={
   harv:    ['Profisee','Azure','Interview','Strategy'],
   cefg:    ['Profisee','IDMC','Snowflake','Alteryx'],
   induh:   ['MDM','Data','Meeting','Docs'],
@@ -135,230 +143,241 @@ const TAGS = {
   learning:['CCA','DAMA','AI','ServiceNow'],
   personal:['RE','Fitness','Family','Finance']
 };
+const STATUS_COLORS={'In progress':'#185FA5','Blocked':'#A32D2D','Done':'#27500A','Deferred':'#633806','Waiting':'#854F0B','Review':'#534AB7'};
 
-const STATUS_COLORS = {
-  'In progress':'#185FA5','Blocked':'#A32D2D','Done':'#27500A',
-  'Deferred':'#633806','Waiting':'#854F0B','Review':'#534AB7'
+let state={
+  tasks:[],
+  milestones:[],
+  eodNotes:[],
+  config:{},
+  priority:[0,1,2,3,4,5,6],
+  projHrs:PROJECTS.map(p=>({proj:p.id,target_hrs:p.defHrs,actual_hrs:0})),
+  nextWeek:'',
+  eodText:''
 };
+let nextId=Date.now();
+let isRecording=false;
+let recognition=null;
+let activeProj=null;
+let currentTab='daily';
 
-// ── State ────────────────────────────────────────────────────
-let state = {
-  tasks:      [],
-  weeklyHours:[],
-  milestones: [],
-  eodNotes:   [],
-  config:     {},
-  priority:   [0,1,2,3,4,5,6],
-  projHrs:    PROJECTS.map(p=>({proj:p.id, target_hrs:p.defHrs, actual_hrs:0})),
-  nextWeek:   '',
-  eodText:    ''
-};
+// ── expanding detail status popup ─────────────────────────────
+let expandedTask=null;
 
-let nextId       = Date.now();
-let isRecording  = false;
-let recognition  = null;
-let activeProj   = null;
-let currentTab   = 'daily';
-let syncPending  = false;
-
-// ── Toast ────────────────────────────────────────────────────
-function toast(msg, dur=2200){
+function toast(msg,dur=2400){
   const el=document.getElementById('toast');
-  el.textContent=msg; el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), dur);
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),dur);
 }
 
-// ── Sync status badge ────────────────────────────────────────
-function setSyncBadge(state){
+function setSyncBadge(s){
   const el=document.getElementById('sync-badge');
   el.className='sync-status';
-  const map={ok:['sync-ok','Synced'],warn:['sync-warn','Offline'],err:['sync-err','Error'],ing:['sync-ing','Syncing...']};
-  const [cls,txt]=map[state]||map.ing;
-  el.classList.add(cls); el.textContent=txt;
+  const m={ok:['sync-ok','Synced'],warn:['sync-warn','Local'],err:['sync-err','Error'],ing:['sync-ing','Working...']};
+  const[cls,txt]=m[s]||m.warn;
+  el.classList.add(cls);el.textContent=txt;
 }
 
-// ── API calls ────────────────────────────────────────────────
+// ── API ────────────────────────────────────────────────────────
 async function apiGet(params){
   const url=SHEETS_URL+'?'+new URLSearchParams(params).toString();
   const r=await fetch(url);
-  if(!r.ok) throw new Error('HTTP '+r.status);
+  if(!r.ok)throw new Error('HTTP '+r.status);
   return r.json();
 }
-
 async function apiPost(body){
-  const r=await fetch(SHEETS_URL,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(body)
-  });
-  if(!r.ok) throw new Error('HTTP '+r.status);
+  const r=await fetch(SHEETS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error('HTTP '+r.status);
   return r.json();
 }
 
-// ── Load all state from Sheets ───────────────────────────────
-async function syncAll(){
+// ── PUSH local → Sheets (explicit user action) ─────────────────
+async function pushToSheets(){
   setSyncBadge('ing');
-  try {
-    const data = await apiGet({action:'getAll'});
-    if(!data.ok) throw new Error(data.error);
+  try{
+    const res=await apiPost({action:'bulkSaveTasks',tasks:state.tasks});
+    if(!res.ok)throw new Error(res.error);
 
-    // Tasks
-    state.tasks = data.tasks || [];
+    // push weekly hours
+    const ws=getMonday(new Date());
+    const whRows=state.projHrs.map(r=>({week_start:ws,proj:r.proj,target_hrs:r.target_hrs,actual_hrs:r.actual_hrs,notes:''}));
+    await apiPost({action:'saveWeeklyHours',rows:whRows});
 
-    // Weekly hours — build projHrs array
-    const today     = new Date();
-    const weekStart = getMonday(today);
-    const whRows    = (data.weeklyHours||[]).filter(r=>r.week_start===weekStart);
-    state.projHrs   = PROJECTS.map(p=>{
-      const found = whRows.find(r=>r.proj===p.id);
-      return {proj:p.id, target_hrs: found?Number(found.target_hrs):p.defHrs, actual_hrs: found?Number(found.actual_hrs):0};
-    });
-
-    // Milestones
-    state.milestones = data.milestones || [];
-
-    // EOD Notes
-    state.eodNotes = data.eodNotes || [];
-    const todayStr = today.toISOString().slice(0,10);
-    const todayNote = state.eodNotes.find(n=>n.date===todayStr);
-    state.eodText = todayNote ? todayNote.note : '';
-
-    // Config
-    state.config = data.config || {};
-    if(state.config.priority_order){
-      try{ state.priority = JSON.parse(state.config.priority_order); }catch(e){}
+    // push milestones one by one if any
+    for(const m of state.milestones){
+      await apiPost({action:'updateMilestone',milestone:m}).catch(()=>apiPost({action:'saveMilestone',milestone:m}));
     }
-    if(state.config.next_week_plan) state.nextWeek = state.config.next_week_plan;
 
-    // nextId
-    if(state.tasks.length){
-      const maxId = Math.max(...state.tasks.map(t=>Number(t.id)||0));
-      if(maxId>=nextId) nextId=maxId+1;
+    // push config
+    await apiPost({action:'saveConfig',key:'priority_order',value:JSON.stringify(state.priority)});
+    await apiPost({action:'saveConfig',key:'next_week_plan',value:state.nextWeek});
+
+    // push today's eod
+    if(state.eodText){
+      await apiPost({action:'saveEODNote',note:{date:new Date().toISOString().slice(0,10),note:state.eodText,blockers:'',next_day_focus:''}});
     }
 
     setSyncBadge('ok');
-    toast('Synced with Google Sheets');
-    renders[currentTab]();
-  } catch(err){
-    setSyncBadge('warn');
-    toast('Offline — using local cache', 3500);
-    loadLocal();
+    toast('All data pushed to Google Sheets — '+res.count+' tasks saved');
+  }catch(e){
+    setSyncBadge('err');
+    toast('Push failed: '+e.message,4000);
   }
 }
 
-// ── Local cache (fallback) ───────────────────────────────────
+// ── PULL Sheets → local (explicit user action) ─────────────────
+async function pullFromSheets(){
+  if(!confirm('Pull from Sheets? This will overwrite local data with whatever is in your Google Sheet.'))return;
+  setSyncBadge('ing');
+  try{
+    const data=await apiGet({action:'getAll'});
+    if(!data.ok)throw new Error(data.error);
+
+    state.tasks=data.tasks||[];
+
+    const ws=getMonday(new Date());
+    const whRows=(data.weeklyHours||[]).filter(r=>r.week_start===ws);
+    state.projHrs=PROJECTS.map(p=>{
+      const f=whRows.find(r=>r.proj===p.id);
+      return{proj:p.id,target_hrs:f?Number(f.target_hrs):p.defHrs,actual_hrs:f?Number(f.actual_hrs):0};
+    });
+
+    state.milestones=data.milestones||[];
+    state.eodNotes=data.eodNotes||[];
+    const td=new Date().toISOString().slice(0,10);
+    const tn=state.eodNotes.find(n=>n.date===td);
+    state.eodText=tn?tn.note:'';
+    state.config=data.config||{};
+    if(state.config.priority_order){try{state.priority=JSON.parse(state.config.priority_order);}catch(e){}}
+    if(state.config.next_week_plan)state.nextWeek=state.config.next_week_plan;
+
+    if(state.tasks.length){
+      const mx=Math.max(...state.tasks.map(t=>Number(t.id)||0));
+      if(mx>=nextId)nextId=mx+1;
+    }
+
+    saveLocal();
+    setSyncBadge('ok');
+    toast('Pulled from Sheets — '+state.tasks.length+' tasks loaded');
+    renders[currentTab]();
+  }catch(e){
+    setSyncBadge('err');
+    toast('Pull failed: '+e.message,4000);
+  }
+}
+
+// ── Local storage ──────────────────────────────────────────────
 function saveLocal(){
-  localStorage.setItem('vt3-state', JSON.stringify({
-    tasks:state.tasks, priority:state.priority,
-    projHrs:state.projHrs, milestones:state.milestones,
-    nextWeek:state.nextWeek, eodText:state.eodText
+  localStorage.setItem('vt4-state',JSON.stringify({
+    tasks:state.tasks,priority:state.priority,
+    projHrs:state.projHrs,milestones:state.milestones,
+    nextWeek:state.nextWeek,eodText:state.eodText
   }));
 }
-
 function loadLocal(){
-  const raw=localStorage.getItem('vt3-state');
-  if(!raw) return;
+  const raw=localStorage.getItem('vt4-state');
+  if(!raw)return false;
   try{
     const s=JSON.parse(raw);
-    state.tasks      = s.tasks      || [];
-    state.priority   = s.priority   || [0,1,2,3,4,5,6];
-    state.projHrs    = s.projHrs    || PROJECTS.map(p=>({proj:p.id,target_hrs:p.defHrs,actual_hrs:0}));
-    state.milestones = s.milestones || [];
-    state.nextWeek   = s.nextWeek   || '';
-    state.eodText    = s.eodText    || '';
-  }catch(e){}
-  renders[currentTab]();
+    state.tasks      =s.tasks      ||[];
+    state.priority   =s.priority   ||[0,1,2,3,4,5,6];
+    state.projHrs    =s.projHrs    ||PROJECTS.map(p=>({proj:p.id,target_hrs:p.defHrs,actual_hrs:0}));
+    state.milestones =s.milestones ||[];
+    state.nextWeek   =s.nextWeek   ||'';
+    state.eodText    =s.eodText    ||'';
+    if(state.tasks.length){
+      const mx=Math.max(...state.tasks.map(t=>Number(t.id)||0));
+      if(mx>=nextId)nextId=mx+1;
+    }
+    return true;
+  }catch(e){return false;}
 }
 
-// ── Helpers ───────────────────────────────────────────────────
-function getMonday(d){
-  const dt=new Date(d);
-  const day=dt.getDay();
-  dt.setDate(dt.getDate()-(day===0?6:day-1));
-  return dt.toISOString().slice(0,10);
-}
+// ── Helpers ────────────────────────────────────────────────────
+function getMonday(d){const dt=new Date(d);const day=dt.getDay();dt.setDate(dt.getDate()-(day===0?6:day-1));return dt.toISOString().slice(0,10);}
+function proj(id){return PROJECTS.find(p=>p.id===id)||PROJECTS[0];}
+function badge(id){const p=proj(id);return`<span class="badge" style="background:${p.bg};color:${p.tc}">${p.name}</span>`;}
+function sc(s){return STATUS_COLORS[s]||'#888';}
+function orderedProjects(){return state.priority.map(i=>PROJECTS[i]);}
+function projHrs(id){return state.projHrs.find(r=>r.proj===id)||{target_hrs:0,actual_hrs:0};}
+function isDone(t){return t.done===true||t.done==='TRUE';}
 
-function proj(id){ return PROJECTS.find(p=>p.id===id)||PROJECTS[0]; }
-
-function badge(id){
-  const p=proj(id);
-  return `<span class="badge" style="background:${p.bg};color:${p.tc}">${p.name}</span>`;
-}
-
-function statusColor(s){ return STATUS_COLORS[s]||'#888'; }
-
-function orderedProjects(){ return state.priority.map(i=>PROJECTS[i]); }
-
-function projHrs(id){ return state.projHrs.find(r=>r.proj===id)||{target_hrs:0,actual_hrs:0}; }
-
-// ── Tab switching ─────────────────────────────────────────────
 function showTab(t){
   document.querySelectorAll('.tab,.panel').forEach(el=>el.classList.remove('active'));
   document.querySelector(`[onclick="showTab('${t}')"]`).classList.add('active');
   document.getElementById(t).classList.add('active');
-  currentTab=t;
-  renders[t]();
+  currentTab=t;renders[t]();
 }
 
-// ── DAILY TAB ─────────────────────────────────────────────────
+// ── METRICS ────────────────────────────────────────────────────
 function renderMetricsHTML(){
-  const total=state.tasks.length, done=state.tasks.filter(t=>t.done===true||t.done==='TRUE').length;
-  const p1=state.tasks.filter(t=>t.pri==='P1'&&t.done!==true&&t.done!=='TRUE').length;
-  const tTarget=state.tasks.reduce((s,t)=>s+(Number(t.target)||0),0);
-  const tActual=state.tasks.reduce((s,t)=>s+(Number(t.actual)||0),0);
-  const pct=tTarget?Math.round(tActual/tTarget*100):0;
+  const total=state.tasks.length,done=state.tasks.filter(isDone).length;
+  const p1=state.tasks.filter(t=>t.pri==='P1'&&!isDone(t)).length;
+  const tT=state.tasks.reduce((s,t)=>s+(Number(t.target)||0),0);
+  const tA=state.tasks.reduce((s,t)=>s+(Number(t.actual)||0),0);
+  const pct=tT?Math.round(tA/tT*100):0;
   const blocked=state.tasks.filter(t=>t.status==='Blocked').length;
-  return `<div class="metric-grid">
+  return`<div class="metric-grid">
     <div class="metric"><div class="metric-label">Tasks done</div><div class="metric-value">${done}/${total}</div><div class="prog-bar"><div class="prog-fill" style="width:${total?Math.round(done/total*100):0}%;background:#185FA5"></div></div></div>
-    <div class="metric"><div class="metric-label">P1 open</div><div class="metric-value" style="color:${p1>3?'#A32D2D':'#1a1a1a'}">${p1}</div><div class="metric-sub">${p1>3?'⚠ Reduce now':'On track'}</div></div>
-    <div class="metric"><div class="metric-label">Time (min)</div><div class="metric-value">${tActual}/${tTarget}</div><div class="prog-bar"><div class="prog-fill" style="width:${Math.min(pct,100)}%;background:${pct>=75?'#3B6D11':'#854F0B'}"></div></div></div>
+    <div class="metric"><div class="metric-label">P1 open</div><div class="metric-value" style="color:${p1>3?'#A32D2D':'#1a1a1a'}">${p1}</div><div class="metric-sub">${p1>3?'Reduce now':'On track'}</div></div>
+    <div class="metric"><div class="metric-label">Time (min)</div><div class="metric-value">${tA}/${tT}</div><div class="prog-bar"><div class="prog-fill" style="width:${Math.min(pct,100)}%;background:${pct>=75?'#3B6D11':'#854F0B'}"></div></div></div>
     <div class="metric"><div class="metric-label">Blocked</div><div class="metric-value" style="color:${blocked?'#A32D2D':'#1a1a1a'}">${blocked}</div><div class="metric-sub">${blocked?'Needs action':'Clear'}</div></div>
   </div>`;
 }
 
+// ── DAILY TAB ──────────────────────────────────────────────────
 function renderDaily(){
-  let html = renderMetricsHTML();
-  html += `<div class="info-banner">Speak button uses voice input (Chrome/Android). Set actual minutes after each task. Max 3 P1s total across all projects.</div>`;
+  let html=renderMetricsHTML();
+  html+=`<div class="info-banner">Push to Sheets saves everything up. Pull from Sheets loads latest. Voice input works on Chrome desktop and Android Chrome.</div>`;
 
   orderedProjects().forEach((p,rank)=>{
-    const ptasks = state.tasks.filter(t=>t.proj===p.id);
-    const doneCount = ptasks.filter(t=>t.done===true||t.done==='TRUE').length;
-    html += `<div class="card">
+    const ptasks=state.tasks.filter(t=>t.proj===p.id);
+    const doneCount=ptasks.filter(isDone).length;
+
+    html+=`<div class="card">
       <div class="proj-header-bar">
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:11px;color:#aaa;font-weight:600">#${rank+1}</span>
           ${badge(p.id)}
           <span style="font-size:11px;color:#aaa">${doneCount}/${ptasks.length} done</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <div id="transcript-${p.id}" class="transcript" style="max-width:150px"></div>
-          <button id="mic-${p.id}" class="btn btn-mic" onclick="startVoice('${p.id}')" style="font-size:12px;padding:4px 10px">&#9679; Speak</button>
-        </div>
       </div>
+
+      <div class="voice-row">
+        <div class="mic-dot" id="micdot-${p.id}"></div>
+        <button id="mic-${p.id}" class="btn btn-mic" onclick="startVoice('${p.id}')">
+          <span id="mictext-${p.id}">Speak task</span>
+        </button>
+        <div id="transcript-${p.id}" class="transcript">Press Speak, dictate your task, then press Stop</div>
+      </div>
+
       <div class="task-wrap">
       <table class="tasks">
         <thead><tr>
           <th style="width:20px"></th>
-          <th>Task</th>
-          <th style="width:65px">Target m</th>
-          <th style="width:65px">Actual m</th>
-          <th style="width:50px">Pri</th>
-          <th style="width:100px">Status</th>
-          <th style="width:85px">Tag</th>
-          <th style="width:30px"></th>
+          <th style="min-width:130px">Task</th>
+          <th style="width:160px">Detailed status / notes</th>
+          <th style="width:62px">Target m</th>
+          <th style="width:62px">Actual m</th>
+          <th style="width:48px">Pri</th>
+          <th style="width:98px">Status</th>
+          <th style="width:82px">Tag</th>
+          <th style="width:28px"></th>
         </tr></thead>
         <tbody>`;
+
     ptasks.forEach(t=>{
-      const isDone = t.done===true||t.done==='TRUE';
-      const sc = statusColor(t.status);
-      html += `<tr>
-        <td><input type="checkbox" ${isDone?'checked':''} onchange="toggleDone('${t.id}')"></td>
-        <td><input type="text" value="${String(t.text||'').replace(/"/g,'&quot;')}" onblur="updTask('${t.id}','text',this.value)" style="${isDone?'text-decoration:line-through;opacity:.45':''}"></td>
+      const done=isDone(t);
+      const detailVal=String(t.detail_status||'').replace(/"/g,'&quot;').replace(/\n/g,'&#10;');
+      html+=`<tr>
+        <td><input type="checkbox" ${done?'checked':''} onchange="toggleDone('${t.id}')"></td>
+        <td><input type="text" value="${String(t.text||'').replace(/"/g,'&quot;')}" onblur="updTask('${t.id}','text',this.value)" style="${done?'text-decoration:line-through;opacity:.45':''}"></td>
+        <td><textarea class="detail-input" placeholder="Add progress notes, blockers, next steps..." onblur="updTask('${t.id}','detail_status',this.value)">${detailVal}</textarea></td>
         <td><input type="number" value="${t.target||0}" min="0" onblur="updTask('${t.id}','target',+this.value)"></td>
         <td><input type="number" value="${t.actual||0}" min="0" onblur="updTask('${t.id}','actual',+this.value)"></td>
         <td><select onchange="updTask('${t.id}','pri',this.value)">${PRI_OPTS.map(o=>`<option ${t.pri===o?'selected':''}>${o}</option>`).join('')}</select></td>
-        <td><select onchange="updTask('${t.id}','status',this.value)" style="color:${sc}">
-          ${STATUS_OPTS.map(o=>`<option ${t.status===o?'selected':''} style="color:${statusColor(o)||'#1a1a1a'}">${o}</option>`).join('')}
+        <td><select onchange="updTask('${t.id}','status',this.value)" style="color:${sc(t.status)}">
+          ${STATUS_OPTS.map(o=>`<option ${t.status===o?'selected':''} style="color:${sc(o)||'#1a1a1a'}">${o}</option>`).join('')}
         </select></td>
         <td><select onchange="updTask('${t.id}','tag',this.value)">
           <option value="">—</option>
@@ -367,159 +386,199 @@ function renderDaily(){
         <td><button class="btn btn-danger" onclick="deleteTask('${t.id}')">✕</button></td>
       </tr>`;
     });
-    html += `</tbody></table></div>
-      <div class="add-row">
-        <span></span>
-        <input type="text" placeholder="New task (or Speak)..." id="nt-${p.id}">
-        <input type="number" value="30" id="ntg-${p.id}" min="0">
-        <select id="ntp-${p.id}">${PRI_OPTS.map((o,i)=>`<option ${i===1?'selected':''}>${o}</option>`).join('')}</select>
-        <select id="nts-${p.id}">${STATUS_OPTS.map(o=>`<option>${o}</option>`).join('')}</select>
-        <select id="ntt-${p.id}"><option value="">—</option>${(TAGS[p.id]||[]).map(o=>`<option>${o}</option>`).join('')}</select>
-        <button class="btn btn-primary" onclick="addTask('${p.id}')">+ Add</button>
+
+    html+=`</tbody></table></div>
+
+      <div class="add-section">
+        <div class="add-row1">
+          <input type="text" placeholder="Task title (or use Speak above)..." id="nt-${p.id}">
+          <textarea class="detail-input" placeholder="Detailed status / initial notes..." id="nd-${p.id}" rows="2"></textarea>
+        </div>
+        <div class="add-row2">
+          <input type="number" value="30" id="ntg-${p.id}" min="0" placeholder="Min">
+          <select id="ntp-${p.id}">${PRI_OPTS.map((o,i)=>`<option ${i===1?'selected':''}>${o}</option>`).join('')}</select>
+          <select id="nts-${p.id}">${STATUS_OPTS.map(o=>`<option>${o}</option>`).join('')}</select>
+          <select id="ntt-${p.id}"><option value="">— Tag —</option>${(TAGS[p.id]||[]).map(o=>`<option>${o}</option>`).join('')}</select>
+          <button class="btn btn-primary" onclick="addTask('${p.id}')">+ Add task</button>
+        </div>
       </div>
     </div>`;
   });
 
-  html += `<div class="card">
-    <div class="section-title">End-of-day notes & blockers</div>
-    <textarea id="eod-ta" rows="3" placeholder="Blockers · Deferrals · Decisions needed · Next day focus...">${state.eodText||''}</textarea>
+  html+=`<div class="card">
+    <div class="section-title">End-of-day snapshot</div>
+    <textarea id="eod-ta" rows="3" placeholder="Summary of today · Blockers · Deferrals · Next day focus...">${state.eodText||''}</textarea>
     <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="saveEOD()">Save day snapshot</button>
-      <button class="btn" onclick="clearDone()">Clear completed</button>
+      <button class="btn" onclick="clearDone()">Clear completed tasks</button>
+      <button class="btn" onclick="pushToSheets()">Push all to Sheets</button>
     </div>
   </div>`;
 
-  document.getElementById('daily').innerHTML = html;
+  document.getElementById('daily').innerHTML=html;
 }
 
-// ── Task actions ──────────────────────────────────────────────
-async function toggleDone(id){
-  const t = state.tasks.find(t=>String(t.id)===String(id));
-  if(!t) return;
-  t.done = !(t.done===true||t.done==='TRUE');
-  saveLocal(); renderDaily();
-  try{ await apiPost({action:'updateTask', task:{...t, done:t.done}}); setSyncBadge('ok'); }
-  catch(e){ setSyncBadge('warn'); }
-}
-
-async function updTask(id, field, val){
-  const t = state.tasks.find(t=>String(t.id)===String(id));
-  if(!t) return;
-  t[field] = field==='target'||field==='actual' ? Number(val)||0 : val;
-  saveLocal();
-  if(field==='actual'||field==='target') renderMetrics_inline();
-  try{ await apiPost({action:'updateTask', task:{...t}}); setSyncBadge('ok'); }
-  catch(e){ setSyncBadge('warn'); }
-}
-
-function renderMetrics_inline(){
-  const el=document.getElementById('daily');
-  if(!el) return;
-  const tmp=document.createElement('div');
-  tmp.innerHTML=renderMetricsHTML();
-  const existing=el.querySelector('.metric-grid');
-  if(existing) existing.replaceWith(tmp.firstChild);
-}
-
-async function addTask(projId){
-  const text = document.getElementById(`nt-${projId}`).value.trim();
-  if(!text){ toast('Enter a task first'); return; }
-  const id     = String(nextId++);
-  const target = parseInt(document.getElementById(`ntg-${projId}`).value)||30;
-  const pri    = document.getElementById(`ntp-${projId}`).value;
-  const status = document.getElementById(`nts-${projId}`).value;
-  const tag    = document.getElementById(`ntt-${projId}`).value;
-  const task   = {id, proj:projId, text, pri, target, actual:0, status, tag, done:false,
-                  date_added:new Date().toISOString().slice(0,10)};
-  state.tasks.push(task);
-  saveLocal(); renderDaily();
-  try{ await apiPost({action:'saveTask', task}); setSyncBadge('ok'); toast('Task saved'); }
-  catch(e){ setSyncBadge('warn'); toast('Saved locally (offline)'); }
-}
-
-async function deleteTask(id){
-  if(!confirm('Remove this task?')) return;
-  state.tasks = state.tasks.filter(t=>String(t.id)!==String(id));
-  saveLocal(); renderDaily();
-  try{ await apiPost({action:'deleteTask', id}); setSyncBadge('ok'); }
-  catch(e){ setSyncBadge('warn'); }
-}
-
-async function clearDone(){
-  const ids = state.tasks.filter(t=>t.done===true||t.done==='TRUE').map(t=>t.id);
-  state.tasks = state.tasks.filter(t=>t.done!==true&&t.done!=='TRUE');
-  saveLocal(); renderDaily();
-  for(const id of ids){
-    try{ await apiPost({action:'deleteTask', id}); }catch(e){}
-  }
-  setSyncBadge('ok'); toast('Completed tasks cleared');
-}
-
-async function saveEOD(){
-  state.eodText = document.getElementById('eod-ta').value;
-  saveLocal();
-  const note = {date:new Date().toISOString().slice(0,10), note:state.eodText, blockers:'', next_day_focus:''};
-  try{ await apiPost({action:'saveEODNote', note}); setSyncBadge('ok'); toast('Day snapshot saved to Sheets'); }
-  catch(e){ setSyncBadge('warn'); toast('Saved locally (offline)'); }
-}
-
-// ── Voice input ───────────────────────────────────────────────
+// ── Voice input — fixed ────────────────────────────────────────
 function startVoice(projId){
-  const SR = window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){ alert('Voice input requires Chrome on desktop or Android Chrome.'); return; }
-  if(isRecording && activeProj===projId){ recognition&&recognition.stop(); return; }
-  if(isRecording) recognition&&recognition.stop();
-  activeProj=projId; isRecording=true;
-  const btn=document.getElementById(`mic-${projId}`);
-  const tr=document.getElementById(`transcript-${projId}`);
-  if(btn){ btn.className='btn btn-mic recording'; btn.textContent='■ Stop'; }
-  if(tr) tr.textContent='Listening...';
+  // Stop existing session
+  if(isRecording){
+    if(recognition){try{recognition.stop();}catch(e){}}
+    isRecording=false;
+    setMicState(activeProj,false);
+    activeProj=null;
+    return;
+  }
+
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    alert('Voice input requires Chrome on desktop or Android Chrome. Safari does not support this API.');
+    return;
+  }
+
+  activeProj=projId;
+  isRecording=true;
+  setMicState(projId,true);
+
+  const tr=document.getElementById('transcript-'+projId);
+  if(tr)tr.textContent='Listening... speak now';
+
   recognition=new SR();
-  recognition.continuous=false; recognition.interimResults=true;
-  recognition.onresult=e=>{
-    const t=Array.from(e.results).map(r=>r[0].transcript).join('');
-    if(tr) tr.textContent=t;
-    if(e.results[e.results.length-1].isFinal){
-      const inp=document.getElementById(`nt-${projId}`);
-      if(inp) inp.value=t;
+  recognition.lang='en-US';
+  recognition.continuous=false;
+  recognition.interimResults=true;
+  recognition.maxAlternatives=1;
+
+  recognition.onstart=function(){
+    if(tr)tr.textContent='Listening...';
+  };
+
+  recognition.onresult=function(e){
+    let interim='';let final='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal)final+=e.results[i][0].transcript;
+      else interim+=e.results[i][0].transcript;
+    }
+    if(tr)tr.textContent=final||interim||'Listening...';
+    if(final){
+      const inp=document.getElementById('nt-'+projId);
+      if(inp)inp.value=final.trim();
     }
   };
-  recognition.onend=()=>{
-    isRecording=false; activeProj=null;
-    const b=document.getElementById(`mic-${projId}`);
-    if(b){ b.className='btn btn-mic'; b.textContent='● Speak'; }
+
+  recognition.onerror=function(e){
+    isRecording=false;activeProj=null;
+    setMicState(projId,false);
+    const msg={
+      'not-allowed':'Microphone access denied. Click the lock icon in your browser address bar and allow microphone.',
+      'no-speech':'No speech detected. Try again.',
+      'network':'Network error. Check your connection.',
+      'aborted':'Stopped.'
+    };
+    if(tr)tr.textContent=msg[e.error]||'Error: '+e.error;
+    if(e.error!=='aborted')toast(msg[e.error]||'Voice error: '+e.error,4000);
   };
-  recognition.onerror=e=>{
-    isRecording=false; activeProj=null;
-    const b=document.getElementById(`mic-${projId}`);
-    if(b){ b.className='btn btn-mic'; b.textContent='● Speak'; }
-    if(e.error!=='aborted') toast('Voice error: '+e.error);
+
+  recognition.onend=function(){
+    isRecording=false;activeProj=null;
+    setMicState(projId,false);
+    const tr2=document.getElementById('transcript-'+projId);
+    if(tr2&&tr2.textContent==='Listening...')tr2.textContent='Done — check task field above';
   };
-  recognition.start();
+
+  try{
+    recognition.start();
+  }catch(e){
+    isRecording=false;activeProj=null;
+    setMicState(projId,false);
+    toast('Could not start voice: '+e.message,4000);
+  }
 }
 
-// ── WEEKLY TAB ────────────────────────────────────────────────
+function setMicState(projId,recording){
+  const btn=document.getElementById('mic-'+projId);
+  const dot=document.getElementById('micdot-'+projId);
+  const txt=document.getElementById('mictext-'+projId);
+  if(btn){btn.className='btn btn-mic'+(recording?' recording':'');}
+  if(dot){dot.style.background=recording?'#A32D2D':'#3C3489';}
+  if(txt){txt.textContent=recording?'Stop':'Speak task';}
+}
+
+// ── Task CRUD ──────────────────────────────────────────────────
+function updTask(id,field,val){
+  const t=state.tasks.find(t=>String(t.id)===String(id));
+  if(!t)return;
+  t[field]=(field==='target'||field==='actual')?Number(val)||0:val;
+  saveLocal();
+  if(field==='actual'||field==='target'){
+    const mg=document.querySelector('.metric-grid');
+    if(mg){const tmp=document.createElement('div');tmp.innerHTML=renderMetricsHTML();mg.replaceWith(tmp.firstChild);}
+  }
+}
+
+function toggleDone(id){
+  const t=state.tasks.find(t=>String(t.id)===String(id));
+  if(!t)return;
+  t.done=!isDone(t);
+  saveLocal();renderDaily();
+}
+
+function addTask(projId){
+  const text=(document.getElementById('nt-'+projId)||{}).value.trim();
+  if(!text){toast('Enter a task title first');return;}
+  const detail=(document.getElementById('nd-'+projId)||{}).value.trim();
+  const target=parseInt((document.getElementById('ntg-'+projId)||{}).value)||30;
+  const pri=(document.getElementById('ntp-'+projId)||{}).value||'P2';
+  const status=(document.getElementById('nts-'+projId)||{}).value||'';
+  const tag=(document.getElementById('ntt-'+projId)||{}).value||'';
+  const id=String(nextId++);
+  const task={id,proj:projId,text,detail_status:detail,pri,target,actual:0,status,tag,done:false,date_added:new Date().toISOString().slice(0,10)};
+  state.tasks.push(task);
+  saveLocal();renderDaily();
+  toast('Task added — use Push to Sheets to save');
+}
+
+function deleteTask(id){
+  if(!confirm('Remove this task?'))return;
+  state.tasks=state.tasks.filter(t=>String(t.id)!==String(id));
+  saveLocal();renderDaily();
+  toast('Removed locally — Push to Sheets to sync');
+}
+
+function clearDone(){
+  const count=state.tasks.filter(isDone).length;
+  if(!count){toast('No completed tasks to clear');return;}
+  if(!confirm('Clear '+count+' completed task(s)? They will be removed.'))return;
+  state.tasks=state.tasks.filter(t=>!isDone(t));
+  saveLocal();renderDaily();
+  toast(count+' completed tasks cleared — Push to Sheets to sync');
+}
+
+function saveEOD(){
+  const ta=document.getElementById('eod-ta');
+  if(!ta)return;
+  state.eodText=ta.value;
+  saveLocal();
+  toast('Day snapshot saved locally — use Push to Sheets to sync');
+}
+
+// ── WEEKLY TAB ─────────────────────────────────────────────────
 function renderWeekly(){
-  const today=new Date(), dow=today.getDay();
-  const mon=new Date(today); mon.setDate(today.getDate()-(dow===0?6:dow-1));
+  const today=new Date(),dow=today.getDay();
+  const mon=new Date(today);mon.setDate(today.getDate()-(dow===0?6:dow-1));
   const wLabel=mon.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  const weekStart=getMonday(today);
 
   let html=`<div style="font-size:13px;font-weight:600;margin-bottom:10px">Week of ${wLabel}</div>`;
-
-  // 5-day P1 grid
   html+=`<div class="weekly-grid">`;
   ['Mon','Tue','Wed','Thu','Fri'].forEach(d=>{
     html+=`<div class="day-col"><div class="day-label">${d}</div>`;
     orderedProjects().forEach(p=>{
-      const t=state.tasks.find(t=>t.proj===p.id&&t.pri==='P1'&&t.done!==true&&t.done!=='TRUE');
-      if(t) html+=`<div class="day-item"><span class="dot" style="background:${p.dot}"></span><span>${String(t.text).substring(0,28)}${t.text.length>28?'…':''}</span></div>`;
+      const t=state.tasks.find(t=>t.proj===p.id&&t.pri==='P1'&&!isDone(t));
+      if(t)html+=`<div class="day-item"><span class="dot" style="background:${p.dot}"></span><span>${String(t.text).substring(0,28)}${t.text.length>28?'…':''}</span></div>`;
     });
     html+=`</div>`;
   });
   html+=`</div>`;
 
-  // Target vs actual hours
   html+=`<div class="card"><div class="section-title" style="margin-top:0">Weekly hours — target vs. actual</div>
     <div class="ph-hdr"><span>Project</span><span>Rank</span><span>Target hrs</span><span>Actual hrs</span><span>Variance</span><span>Health</span></div>`;
   orderedProjects().forEach((p,rank)=>{
@@ -540,40 +599,35 @@ function renderWeekly(){
 
   html+=`<div class="card"><div class="section-title" style="margin-top:0">Next week plan (set Sunday night)</div>
     <textarea id="nw-ta" rows="8" placeholder="One key outcome per project:&#10;HarV: ...&#10;CeFG: ...&#10;IndUH: ...&#10;ChiPS: ...&#10;Yugma: ...&#10;Learning: ...&#10;Personal: ...">${state.nextWeek||''}</textarea>
-    <div style="margin-top:8px"><button class="btn btn-primary" onclick="saveNextWeek()">Save weekly plan</button></div>
+    <div style="margin-top:8px;display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="saveNextWeek()">Save weekly plan</button>
+      <button class="btn" onclick="pushToSheets()">Push to Sheets</button>
+    </div>
   </div>`;
 
   document.getElementById('weekly').innerHTML=html;
 }
 
-async function updProjHrs(projId, field, val){
-  const ph=projHrs(projId);
-  ph[field]=Number(val)||0;
-  saveLocal();
-  const weekStart=getMonday(new Date());
-  try{
-    await apiPost({action:'saveWeeklyHours', rows:[{week_start:weekStart, proj:projId, target_hrs:ph.target_hrs, actual_hrs:ph.actual_hrs, notes:''}]});
-    setSyncBadge('ok');
-  }catch(e){ setSyncBadge('warn'); }
+function updProjHrs(projId,field,val){
+  const ph=projHrs(projId);ph[field]=Number(val)||0;saveLocal();
+}
+function saveNextWeek(){
+  const ta=document.getElementById('nw-ta');
+  if(!ta)return;
+  state.nextWeek=ta.value;saveLocal();
+  toast('Weekly plan saved locally — Push to Sheets to sync');
 }
 
-async function saveNextWeek(){
-  state.nextWeek=document.getElementById('nw-ta').value;
-  saveLocal();
-  try{ await apiPost({action:'saveConfig', key:'next_week_plan', value:state.nextWeek}); setSyncBadge('ok'); toast('Weekly plan saved'); }
-  catch(e){ setSyncBadge('warn'); toast('Saved locally'); }
-}
-
-// ── HEALTH TAB ────────────────────────────────────────────────
+// ── HEALTH TAB ─────────────────────────────────────────────────
 function renderHealth(){
   let html=`<div class="card"><div class="section-title" style="margin-top:0">Project priority — use ▲▼ to reorder</div>
     <div class="ph-hdr"><span>Project</span><span>Rank</span><span>Weekly hrs</span><span>Completion</span><span>Health</span><span>P1 open</span></div>`;
   state.priority.forEach((pi,rank)=>{
     const p=PROJECTS[pi];
     const ptasks=state.tasks.filter(t=>t.proj===p.id);
-    const done=ptasks.filter(t=>t.done===true||t.done==='TRUE').length;
+    const done=ptasks.filter(isDone).length;
     const pct=ptasks.length?Math.round(done/ptasks.length*100):0;
-    const p1=ptasks.filter(t=>t.pri==='P1'&&t.done!==true&&t.done!=='TRUE').length;
+    const p1=ptasks.filter(t=>t.pri==='P1'&&!isDone(t)).length;
     const ph=projHrs(p.id);
     const h=pct>=80?['On track','#27500A','#EAF3DE']:pct>=40?['At risk','#633806','#FAEEDA']:['Behind','#A32D2D','#FCEBEB'];
     html+=`<div class="ph-grid">
@@ -586,21 +640,17 @@ function renderHealth(){
       </div>
       <span style="color:#aaa;font-size:11px">#${rank+1}</span>
       <span style="font-size:12px">${ph.actual_hrs}/${ph.target_hrs}h</span>
-      <div>
-        <div style="font-size:10px;margin-bottom:2px;color:#888">${pct}%</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${h[1]}"></div></div>
-      </div>
+      <div><div style="font-size:10px;margin-bottom:2px;color:#888">${pct}%</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${h[1]}"></div></div></div>
       <span class="badge" style="background:${h[2]};color:${h[1]}">${h[0]}</span>
       <span style="font-size:12px;color:${p1>2?'#A32D2D':'#888'}">${p1} P1${p1!==1?'s':''}</span>
     </div>`;
   });
   html+=`</div>`;
 
-  // Milestones
   html+=`<div class="card"><div class="section-title" style="margin-top:0">Monthly milestones</div>
-    <div style="display:grid;grid-template-columns:minmax(0,1fr) 72px 88px 22px;gap:6px;padding:3px 0 7px;font-size:10px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.03em;border-bottom:1px solid #e0e0e0">
-      <span>Milestone</span><span>Project</span><span>Month</span><span></span>
-    </div>`;
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 72px 88px 22px;gap:6px;padding:3px 0 7px;font-size:10px;color:#888;font-weight:600;text-transform:uppercase;border-bottom:1px solid #e0e0e0">
+      <span>Milestone</span><span>Project</span><span>Month</span><span></span></div>`;
   state.milestones.forEach((m,i)=>{
     const p=proj(m.proj);
     html+=`<div class="ms-grid">
@@ -614,68 +664,142 @@ function renderHealth(){
   document.getElementById('health').innerHTML=html;
 }
 
-async function moveProj(rank,dir){
+function moveProj(rank,dir){
   const nr=rank+dir;
-  if(nr<0||nr>=state.priority.length) return;
+  if(nr<0||nr>=state.priority.length)return;
   [state.priority[rank],state.priority[nr]]=[state.priority[nr],state.priority[rank]];
-  saveLocal(); renderHealth();
-  try{ await apiPost({action:'saveConfig', key:'priority_order', value:JSON.stringify(state.priority)}); setSyncBadge('ok'); }
-  catch(e){ setSyncBadge('warn'); }
+  saveLocal();renderHealth();
 }
-
-async function toggleMS(i){
+function toggleMS(i){
   const m=state.milestones[i];
   m.done=!(m.done===true||m.done==='TRUE');
-  saveLocal(); renderHealth();
-  try{ await apiPost({action:'updateMilestone', milestone:m}); setSyncBadge('ok'); }
-  catch(e){ setSyncBadge('warn'); }
+  saveLocal();renderHealth();
 }
 
-// ── RITUAL TAB ────────────────────────────────────────────────
+// ── RITUAL TAB ─────────────────────────────────────────────────
 function renderRitual(){
   document.getElementById('ritual').innerHTML=`
   <div class="card">
-    <div class="section-title" style="margin-top:0">Night before — 20 min ritual</div>
+    <div class="section-title" style="margin-top:0">Night before — 20 min</div>
     <div class="ritual-block"><div style="font-size:13px;font-weight:600">Step 1 — Close today (5 min)</div>
-      <ul><li>Mark all tasks done / deferred / blocked in Daily tab</li><li>Write blockers in EOD notes and save snapshot</li><li>Any deferred task: still P1? If not, drop to P2</li></ul></div>
+      <ul><li>Mark tasks done / deferred / blocked</li><li>Fill Detailed status on any in-progress task — one sentence on where it stands</li><li>Write EOD snapshot and save</li><li>Any deferred task: still P1? If not, drop to P2</li></ul></div>
     <div class="ritual-block"><div style="font-size:13px;font-weight:600">Step 2 — Reprioritize (8 min)</div>
-      <ul><li>Open Health tab — reorder projects if context shifted this week</li><li>Check completion % — below 40% midweek needs rebalancing</li><li>Ask: "What is the single essential output per project tomorrow?"</li><li>Set max 3 P1 tasks TOTAL across all 7 projects</li><li>Any Blocked tasks — add action owner / next step in Status field</li></ul></div>
-    <div class="ritual-block"><div style="font-size:13px;font-weight:600">Step 3 — Load tomorrow (5 min)</div>
-      <ul><li>Add tomorrow's tasks now in Daily tab — set Pri and Tag before closing</li><li>Top P1 task = highest-priority project per Health tab rank</li><li>Block deep-work windows in Google Calendar for top 2 projects</li></ul></div>
+      <ul><li>Open Health tab — reorder projects if context shifted</li><li>Max 3 P1 tasks TOTAL across all 7 projects</li><li>Any Blocked tasks — add next step in Detailed status field</li></ul></div>
+    <div class="ritual-block"><div style="font-size:13px;font-weight:600">Step 3 — Load + push (5 min)</div>
+      <ul><li>Add tomorrow's tasks with Pri, Tag, and initial Detailed status</li><li>Click Push to Sheets — always end the day with Sheets in sync</li></ul></div>
   </div>
   <div class="card">
     <div class="section-title" style="margin-top:0">Morning scan — 5 min</div>
     <div class="ritual-block" style="border-left-color:#534AB7">
-      <ul><li>Open Daily tab — tasks already loaded from last night</li><li>Read P1s only — trust last night's prioritization</li><li>Check overnight Slack/email for priority changes before scanning tasks</li><li>Start first P1 within 10 min of opening laptop</li></ul></div>
+      <ul><li>Open tracker — tasks already loaded from last night</li><li>Read P1s and their Detailed status notes only</li><li>Check overnight messages for priority changes</li><li>Start first P1 within 10 min of opening laptop</li></ul></div>
   </div>
   <div class="card">
-    <div class="section-title" style="margin-top:0">Weekly rhythm</div>
-    <div style="display:grid;grid-template-columns:110px 1fr;gap:0">
-      ${[['Sunday night','Weekly tab — set one outcome per project, check monthly milestones'],
-         ['Mon morning','Confirm week plan aligns with Health tab ranking'],
-         ['Wed night','Mid-week check — any project below 40%? Rebalance hours in Weekly tab'],
-         ['Fri EOD','Fill actual hours, note wins + misses, save EOD snapshot']].map(([d,t])=>`
-      <div style="font-size:11px;font-weight:600;color:#888;padding:6px 0;border-bottom:1px solid #f0f0f0">${d}</div>
-      <div class="rule-item">${t}</div>`).join('')}
-    </div>
+    <div class="section-title" style="margin-top:0">Detailed status best practices</div>
+    ${[
+      ['Daily','One sentence: what happened + what is next. Example: "Reviewed Wave 3 WBS — 3 gaps found. Next: send to PM for sign-off."'],
+      ['Blocked tasks','State the blocker and who unblocks it. Example: "Waiting on Priya to confirm ADF pipeline access — escalate if no response by Wed."'],
+      ['Reporting','Use Reports tab to generate a daily or weekly summary from your Detailed status fields — paste directly into email or Teams.']
+    ].map(([t,d])=>`<div class="rule-item"><strong style="color:#1a1a1a">${t}:</strong> ${d}</div>`).join('')}
   </div>
   <div class="card">
     <div class="section-title" style="margin-top:0">Cognitive ergonomics rules</div>
-    ${[['3 P1 rule','Max 3 P1 tasks per day across all 7 projects. If you have 4+, they are all P2.'],
-       ['One outcome per project','Name the one thing each project needs from you today before adding tasks.'],
-       ['Status discipline','Update Status immediately when anything changes — never leave Blocked blank.'],
-       ['Tag before closing','Set Tag when adding a task — 2 seconds now saves 10 min in weekly review.'],
-       ['Yugma + Learning are protected','Fixed calendar slots only. Never moved — only scope reduced.'],
-       ['Speak don\'t type','Use Speak button for task capture during context switches.'],
-       ['Actuals = your audit trail','Enter actual minutes before moving to the next task.']
+    ${[
+      ['3 P1 rule','Max 3 P1 tasks per day across all 7 projects.'],
+      ['Push before closing','Always end the day with Push to Sheets — your Sheet is your backup.'],
+      ['Speak don\'t type','Use Speak button on Chrome for fast task capture.'],
+      ['Actuals = audit trail','Enter actual minutes before moving to the next task.'],
+      ['Detailed status = reporting fuel','One sentence per task per day powers your weekly report.']
     ].map(([t,d])=>`<div class="rule-item"><strong style="color:#1a1a1a">${t}:</strong> ${d}</div>`).join('')}
   </div>`;
 }
 
-const renders = {daily:renderDaily, weekly:renderWeekly, health:renderHealth, ritual:renderRitual};
+// ── REPORTS TAB ────────────────────────────────────────────────
+function renderReports(){
+  const today=new Date().toISOString().slice(0,10);
+  const doneTasks=state.tasks.filter(isDone);
+  const inProgressTasks=state.tasks.filter(t=>t.status==='In progress'&&!isDone(t));
+  const blockedTasks=state.tasks.filter(t=>t.status==='Blocked');
 
-// ── Boot ──────────────────────────────────────────────────────
-loadLocal();
+  let dailyReport=`DAILY PROGRESS REPORT — ${today}\n${'='.repeat(50)}\n\n`;
+  orderedProjects().forEach(p=>{
+    const pd=doneTasks.filter(t=>t.proj===p.id);
+    const pip=inProgressTasks.filter(t=>t.proj===p.id);
+    const pb=blockedTasks.filter(t=>t.proj===p.id);
+    if(!pd.length&&!pip.length&&!pb.length)return;
+    dailyReport+=`${p.name.toUpperCase()}\n${'-'.repeat(30)}\n`;
+    if(pd.length){
+      dailyReport+=`Completed:\n`;
+      pd.forEach(t=>{dailyReport+=`  • ${t.text}`;if(t.detail_status)dailyReport+=` — ${t.detail_status}`;dailyReport+='\n';});
+    }
+    if(pip.length){
+      dailyReport+=`In progress:\n`;
+      pip.forEach(t=>{dailyReport+=`  • ${t.text}`;if(t.detail_status)dailyReport+=` — ${t.detail_status}`;dailyReport+='\n';});
+    }
+    if(pb.length){
+      dailyReport+=`Blocked:\n`;
+      pb.forEach(t=>{dailyReport+=`  • ${t.text}`;if(t.detail_status)dailyReport+=` — ${t.detail_status}`;dailyReport+='\n';});
+    }
+    dailyReport+='\n';
+  });
+
+  if(state.eodText)dailyReport+=`EOD NOTES\n${'-'.repeat(30)}\n${state.eodText}\n`;
+
+  let weeklyReport=`WEEKLY PROGRESS REPORT — Week of ${getMonday(new Date())}\n${'='.repeat(50)}\n\n`;
+  orderedProjects().forEach(p=>{
+    const ph=projHrs(p.id);
+    const ptasks=state.tasks.filter(t=>t.proj===p.id);
+    const pdone=ptasks.filter(isDone);
+    const pct=ptasks.length?Math.round(pdone.length/ptasks.length*100):0;
+    weeklyReport+=`${p.name.toUpperCase()} — ${ph.actual_hrs}/${ph.target_hrs}h | ${pct}% tasks done\n`;
+    ptasks.forEach(t=>{
+      const s=isDone(t)?'[DONE]':t.status?`[${t.status.toUpperCase()}]`:'[OPEN]';
+      weeklyReport+=`  ${s} ${t.text}`;
+      if(t.detail_status)weeklyReport+=`\n         ${t.detail_status}`;
+      weeklyReport+='\n';
+    });
+    weeklyReport+='\n';
+  });
+  if(state.nextWeek)weeklyReport+=`NEXT WEEK PLAN\n${'-'.repeat(30)}\n${state.nextWeek}\n`;
+
+  document.getElementById('reports').innerHTML=`
+  <div class="card">
+    <div class="section-title" style="margin-top:0">Daily progress report</div>
+    <p style="font-size:12px;color:#888;margin-bottom:8px">Auto-generated from today's completed, in-progress, and blocked tasks plus their Detailed status notes. Copy and paste into email or Teams.</p>
+    <textarea id="daily-report" rows="18" style="font-family:monospace;font-size:11px">${dailyReport}</textarea>
+    <div class="report-btn-bar">
+      <button class="btn btn-primary" onclick="copyReport('daily-report')">Copy daily report</button>
+      <button class="btn" onclick="renderReports()">Refresh</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-top:0">Weekly progress report</div>
+    <p style="font-size:12px;color:#888;margin-bottom:8px">Full week view with hours and all task statuses. Use this for Friday EOD reporting or weekly stakeholder updates.</p>
+    <textarea id="weekly-report" rows="22" style="font-family:monospace;font-size:11px">${weeklyReport}</textarea>
+    <div class="report-btn-bar">
+      <button class="btn btn-primary" onclick="copyReport('weekly-report')">Copy weekly report</button>
+    </div>
+  </div>`;
+}
+
+function copyReport(id){
+  const ta=document.getElementById(id);
+  if(!ta)return;
+  ta.select();
+  try{
+    document.execCommand('copy');
+    toast('Report copied to clipboard');
+  }catch(e){
+    toast('Select the text manually and copy with Ctrl+C');
+  }
+}
+
+const renders={daily:renderDaily,weekly:renderWeekly,health:renderHealth,ritual:renderRitual,reports:renderReports};
+
+// ── Boot — local only, no auto-sync ────────────────────────────
+const hadData=loadLocal();
+if(hadData){setSyncBadge('warn');toast('Loaded from local cache — use Push to Sheets to sync up',3500);}
+else{setSyncBadge('warn');toast('No local data — use Pull from Sheets if you have existing data',4000);}
+renderDaily();
 </script>
 </body>
 </html>
