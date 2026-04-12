@@ -349,11 +349,17 @@ function renderDaily(){
       </div>
 
       <div class="voice-row">
-        <div class="mic-dot" id="micdot-${p.id}"></div>
-        <button id="mic-${p.id}" class="btn btn-mic" onclick="startVoice('${p.id}')">
-          <span id="mictext-${p.id}">Speak task</span>
-        </button>
-        <div id="transcript-${p.id}" class="transcript">Press Speak, dictate your task, then press Stop</div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <div class="mic-dot" id="micdot-${p.id}"></div>
+          <button id="mic-${p.id}" class="btn btn-mic" onclick="startVoice('${p.id}','title')">
+            <span id="mictext-${p.id}">Speak task</span>
+          </button>
+          <div class="mic-dot" id="micdot-d-${p.id}"></div>
+          <button id="mic-d-${p.id}" class="btn btn-mic" onclick="startVoice('${p.id}','detail')">
+            <span id="mictext-d-${p.id}">Speak detail</span>
+          </button>
+        </div>
+        <div id="transcript-${p.id}" class="transcript">Press a Speak button and dictate</div>
       </div>
 
       <div class="task-wrap">
@@ -424,14 +430,22 @@ function renderDaily(){
 }
 
 // ── Voice input — fixed ────────────────────────────────────────
-function startVoice(projId){
-  // Stop existing session
+let activeMode=null;
+
+function startVoice(projId,mode){
+  // mode = 'title' or 'detail'
+  const sessionKey=projId+'-'+mode;
+
+  // Stop if already recording this exact button
+  if(isRecording && activeProj===projId && activeMode===mode){
+    if(recognition){try{recognition.stop();}catch(e){}}
+    return;
+  }
+  // Stop any other active session first
   if(isRecording){
     if(recognition){try{recognition.stop();}catch(e){}}
     isRecording=false;
-    setMicState(activeProj,false);
-    activeProj=null;
-    return;
+    setMicState(activeProj,activeMode,false);
   }
 
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -441,11 +455,12 @@ function startVoice(projId){
   }
 
   activeProj=projId;
+  activeMode=mode;
   isRecording=true;
-  setMicState(projId,true);
+  setMicState(projId,mode,true);
 
   const tr=document.getElementById('transcript-'+projId);
-  if(tr)tr.textContent='Listening... speak now';
+  if(tr)tr.textContent=mode==='detail'?'Listening for detailed status...':'Listening for task title...';
 
   recognition=new SR();
   recognition.lang='en-US';
@@ -465,16 +480,21 @@ function startVoice(projId){
     }
     if(tr)tr.textContent=final||interim||'Listening...';
     if(final){
-      const inp=document.getElementById('nt-'+projId);
-      if(inp)inp.value=final.trim();
+      if(mode==='detail'){
+        const ta=document.getElementById('nd-'+projId);
+        if(ta) ta.value=(ta.value?ta.value+' ':'')+final.trim();
+      } else {
+        const inp=document.getElementById('nt-'+projId);
+        if(inp)inp.value=final.trim();
+      }
     }
   };
 
   recognition.onerror=function(e){
-    isRecording=false;activeProj=null;
-    setMicState(projId,false);
+    isRecording=false;activeProj=null;activeMode=null;
+    setMicState(projId,mode,false);
     const msg={
-      'not-allowed':'Microphone access denied. Click the lock icon in your browser address bar and allow microphone.',
+      'not-allowed':'Microphone access denied. Click the lock icon and allow microphone.',
       'no-speech':'No speech detected. Try again.',
       'network':'Network error. Check your connection.',
       'aborted':'Stopped.'
@@ -484,28 +504,30 @@ function startVoice(projId){
   };
 
   recognition.onend=function(){
-    isRecording=false;activeProj=null;
-    setMicState(projId,false);
+    isRecording=false;activeProj=null;activeMode=null;
+    setMicState(projId,mode,false);
     const tr2=document.getElementById('transcript-'+projId);
-    if(tr2&&tr2.textContent==='Listening...')tr2.textContent='Done — check task field above';
+    if(tr2&&tr2.textContent==='Listening...')tr2.textContent=mode==='detail'?'Done — check detail field':'Done — check task title field';
   };
 
   try{
     recognition.start();
   }catch(e){
-    isRecording=false;activeProj=null;
-    setMicState(projId,false);
+    isRecording=false;activeProj=null;activeMode=null;
+    setMicState(projId,mode,false);
     toast('Could not start voice: '+e.message,4000);
   }
 }
 
-function setMicState(projId,recording){
-  const btn=document.getElementById('mic-'+projId);
-  const dot=document.getElementById('micdot-'+projId);
-  const txt=document.getElementById('mictext-'+projId);
+function setMicState(projId,mode,recording){
+  const suffix=mode==='detail'?'-d-':'-';
+  const btn=document.getElementById('mic'+suffix+projId);
+  const dot=document.getElementById('micdot'+suffix+projId);
+  const txt=document.getElementById('mictext'+suffix+projId);
+  const idle=mode==='detail'?'Speak detail':'Speak task';
   if(btn){btn.className='btn btn-mic'+(recording?' recording':'');}
   if(dot){dot.style.background=recording?'#A32D2D':'#3C3489';}
-  if(txt){txt.textContent=recording?'Stop':'Speak task';}
+  if(txt){txt.textContent=recording?'Stop':idle;}
 }
 
 // ── Task CRUD ──────────────────────────────────────────────────
