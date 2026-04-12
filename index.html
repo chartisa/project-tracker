@@ -178,7 +178,9 @@ function setSyncBadge(s){
   el.classList.add(cls);el.textContent=txt;
 }
 
-// ── API ────────────────────────────────────────────────────────
+// ── API — GET only to avoid CORS preflight ─────────────────────
+// Apps Script does not handle OPTIONS preflight. All calls use GET
+// with the payload base64-encoded in a 'data' param for write ops.
 async function apiGet(params){
   const url=SHEETS_URL+'?'+new URLSearchParams(params).toString();
   const r=await fetch(url);
@@ -186,7 +188,10 @@ async function apiGet(params){
   return r.json();
 }
 async function apiPost(body){
-  const r=await fetch(SHEETS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  // Encode payload as base64 and send as GET parameter
+  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(body))));
+  const url=SHEETS_URL+'?method=POST&payload='+encodeURIComponent(encoded);
+  const r=await fetch(url);
   if(!r.ok)throw new Error('HTTP '+r.status);
   return r.json();
 }
