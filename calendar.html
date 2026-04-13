@@ -198,6 +198,37 @@ for(let h=8;h<18;h++){
   SLOTS.push(`${String(h).padStart(2,'0')}:30`);
 }
 
+function normalizeSlot(raw){
+  if(!raw)return null;
+  const s=String(raw).trim();
+  // Already padded: "09:00"
+  if(/^\d{2}:\d{2}$/.test(s)&&SLOTS.includes(s))return s;
+  // Unpadded: "9:00" or "9:30"
+  const m=s.match(/^(\d{1,2}):(\d{2})$/);
+  if(m){
+    const padded=String(parseInt(m[1])).padStart(2,'0')+':'+m[2];
+    if(SLOTS.includes(padded))return padded;
+    // round to nearest 30
+    const mins=parseInt(m[2]);
+    const roundedMins=mins<15?'00':mins<45?'30':'00';
+    const roundedHour=mins>=45?parseInt(m[1])+1:parseInt(m[1]);
+    const rounded=String(roundedHour).padStart(2,'0')+':'+roundedMins;
+    if(SLOTS.includes(rounded))return rounded;
+  }
+  // Handle "9:00 AM" / "9:30 PM" formats
+  const m2=s.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if(m2){
+    let h=parseInt(m2[1]);
+    const mins=m2[2];
+    const ampm=m2[3].toUpperCase();
+    if(ampm==='PM'&&h!==12)h+=12;
+    if(ampm==='AM'&&h===12)h=0;
+    const padded=String(h).padStart(2,'0')+':'+mins;
+    if(SLOTS.includes(padded))return padded;
+  }
+  return null;
+}
+
 // State: grid[slot][col] = text
 let grid={};
 let uploadedImages={};
@@ -345,10 +376,12 @@ async function parseAllCalendars(){
   }
 
   spinner.classList.remove('show');
-  refreshGridValues();
+  console.log('[parse] Final grid sample:', JSON.stringify(Object.fromEntries(Object.entries(grid).filter(([k,v])=>v))));
   autoSave();
-  statusEl.textContent='All done — review and edit cells as needed';
-  toast('Calendar parsing complete');
+  refreshGridValues();
+  const filled=Object.values(grid).filter(v=>v).length;
+  statusEl.textContent=`All done — ${filled} event${filled!==1?'s':''} filled. Review and edit as needed.`;
+  toast(`Parsing complete — ${filled} event${filled!==1?'s':''} added`);
 }
 
 async function parseSingleCalendar(col,dateStr){
@@ -416,12 +449,20 @@ Only include events that fall within 08:00-18:00.`;
     throw new Error('Could not parse AI response');
   }
 
+  console.log(`[${col}] Raw AI events:`, JSON.stringify(events));
+  let matched=0;
   events.forEach(ev=>{
-    if(SLOTS.includes(ev.slot)&&ev.text){
-      const key=slotKey(ev.slot,col);
+    const normalized=normalizeSlot(ev.slot);
+    if(normalized&&ev.text){
+      const key=slotKey(normalized,col);
       grid[key]=ev.text;
+      matched++;
+      console.log(`[${col}] Matched: ${ev.slot} -> ${normalized} => "${ev.text}"`);
+    } else {
+      console.warn(`[${col}] No match for slot: "${ev.slot}" text: "${ev.text}"`);
     }
   });
+  console.log(`[${col}] Total matched: ${matched}/${events.length}`);
 }
 
 // ── Save / Load ───────────────────────────────────────────────
@@ -439,7 +480,8 @@ function saveLocal(){
 
 function loadForDate(){
   const date=document.getElementById('cal-date').value||todayStr();
-  initGrid();
+  // Reset grid to blank for this date first
+  SLOTS.forEach(s=>{COLS.forEach(c=>{grid[slotKey(s,c)]='';});});
   const saved=localStorage.getItem(saveKey(date));
   if(saved){
     try{
