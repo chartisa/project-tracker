@@ -33,6 +33,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .btn-primary:hover{background:#333}
 .btn-print{background:#2a7a3b;color:#fff;border-color:#2a7a3b}
 .btn-print:hover{background:#1e5c2c}
+.nav-btn{font-size:18px;padding:3px 10px;font-weight:300;line-height:1;min-width:32px}
 
 /* ── Legend ── */
 .legend{display:flex;align-items:center;gap:14px;padding:8px 20px;background:#fff;border-bottom:1px solid var(--border);flex-wrap:wrap}
@@ -136,10 +137,15 @@ td.col-personal{border-left:3px solid var(--personal-border)}
 <div class="topbar">
   <div class="topbar-left">
     <div class="app-title">Daily Schedule</div>
-    <input type="date" class="date-input" id="cal-date">
+    <div style="display:flex;align-items:center;gap:4px">
+      <button class="btn nav-btn no-print" onclick="navigateDate(-1)" title="Previous day">&#8249;</button>
+      <input type="date" class="date-input" id="cal-date">
+      <button class="btn nav-btn no-print" onclick="navigateDate(1)" title="Next day">&#8250;</button>
+    </div>
   </div>
   <div class="topbar-right">
     <button class="btn no-print" onclick="toggleUpload()">Upload calendars</button>
+    <button class="btn no-print" onclick="copyFromLastWeek()">Copy from last week</button>
     <button class="btn no-print" onclick="clearAll()">Clear all</button>
     <button class="btn no-print" onclick="saveLocal()">Save</button>
     <button class="btn btn-print no-print" onclick="window.print()">Print / PDF</button>
@@ -254,6 +260,61 @@ function formatDateHeader(d){
 function onDateChange(){
   document.getElementById('grid-date-header').textContent=formatDateHeader(document.getElementById('cal-date').value);
   loadForDate();
+}
+
+function navigateDate(dir){
+  const inp=document.getElementById('cal-date');
+  const current=inp.value||todayStr();
+  const dt=new Date(current+'T12:00:00');
+  dt.setDate(dt.getDate()+dir);
+  const newDate=dt.toISOString().slice(0,10);
+  inp.value=newDate;
+  document.getElementById('grid-date-header').textContent=formatDateHeader(newDate);
+  loadForDate();
+}
+
+function copyFromLastWeek(){
+  const currentDate=document.getElementById('cal-date').value||todayStr();
+  const dt=new Date(currentDate+'T12:00:00');
+  dt.setDate(dt.getDate()-7);
+  const lastWeekDate=dt.toISOString().slice(0,10);
+
+  const saved=localStorage.getItem(saveKey(lastWeekDate));
+  if(!saved){
+    toast('No saved schedule found for '+lastWeekDate+' (same day last week)',3500);
+    return;
+  }
+
+  let lastWeekGrid={};
+  try{lastWeekGrid=JSON.parse(saved);}catch(e){toast('Could not read last week data');return;}
+
+  let copied=0;
+  let skipped=0;
+  SLOTS.forEach(s=>{
+    COLS.forEach(c=>{
+      const key=slotKey(s,c);
+      const lastVal=lastWeekGrid[key]||'';
+      const currVal=grid[key]||'';
+      if(lastVal&&!currVal){
+        // Cell is empty today but had content last week — copy it
+        grid[key]=lastVal;
+        copied++;
+      } else if(lastVal&&currVal){
+        skipped++;
+      }
+    });
+  });
+
+  if(copied===0&&skipped===0){
+    toast('Last week ('+lastWeekDate+') was empty — nothing to copy',3500);
+    return;
+  }
+
+  autoSave();
+  refreshGridValues();
+  let msg='Copied '+copied+' event'+(copied!==1?'s':'')+'from '+lastWeekDate;
+  if(skipped>0)msg+=' · '+skipped+' skipped (already filled)';
+  toast(msg,4000);
 }
 
 // ── Build grid rows ────────────────────────────────────────────
